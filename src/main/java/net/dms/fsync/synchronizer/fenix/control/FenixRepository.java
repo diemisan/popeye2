@@ -172,6 +172,7 @@ public class FenixRepository {
             }
 
 
+            /* TODO FIXME it does not work with some Fenix change.
 
             List<FenixAcc> accsIncurridos = searchACCsIncurridos(idOt, forceDownload);
             int iAcc;
@@ -185,9 +186,13 @@ public class FenixRepository {
                 }
             }
 
+            */
+
         }catch(IOException ex){
             throw new AppException(ex);
         }
+
+
 /*
         // TODO FIXME, 1.load asynchronously, 2.avoiding load the object each time
         FenixPeticion fenixPeticion = loadPeticion(idOt);

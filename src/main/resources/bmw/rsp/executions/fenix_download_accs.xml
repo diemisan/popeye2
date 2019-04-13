@@ -2,8 +2,8 @@
 <execution name="fenix_download_accs">
     <actions>
         <action name="download">
-            <url>${everis.conf.fenix.urlbase}/fenix/actuaciones/exportarActuacionesCargaMasivaPetOtAction.do?pathKey=actuaciones.template.path.key&amp;fileName=actuaciones.template.filename.key&amp;PETICION_OID=${everis.fenix.idpeticionot}</url>
-            <httpMethod>GET</httpMethod>
+            <url>${everis.conf.fenix.urlbase}/fenix/actuaciones/exportarActuacionesCargaMasivaPetOtAction.do?pathKey=actuaciones.template.path.key&amp;fileName=actuaciones.template.filename.key</url>
+            <httpMethod>POST</httpMethod>
             <headers>
                 <header name="Accept" value="text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"/>
                 <header name="Accept-Encoding" value="gzip, deflate, sdch"/>
@@ -15,6 +15,28 @@
                 <header name="Upgrade-Insecure-Requests" value="1"/>
                 <header name="User-Agent" value="Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36"/>
             </headers>
+            <parameters>
+                <parameter>
+                    <name>idAcc</name>
+                    <value></value>
+                </parameter>
+                <parameter>
+                    <name>idPeticionCargaMasiva</name>
+                    <value>${everis.fenix.idpeticionot}</value>
+                </parameter>
+                <parameter>
+                    <name>pathKey</name>
+                    <value>actuaciones.template.path.key</value>
+                </parameter>
+                <parameter>
+                    <name>fileName</name>
+                    <value>actuaciones.template.filename.key</value>
+                </parameter>
+                <parameter>
+                    <name>tieneFiltros</name>
+                    <value>false</value>
+                </parameter>
+            </parameters>
             <validators>
                 <validator className="net.dms.fsync.httphandlers.control.validators.ContentTypeValidator">
                     <parameters>
