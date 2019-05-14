@@ -172,12 +172,13 @@ public class FenixRepository {
             }
 
 
-            /* TODO FIXME it does not work with some Fenix change.
+
 
             List<FenixAcc> accsIncurridos = searchACCsIncurridos(idOt, forceDownload);
             int iAcc;
 
             fenixAccs = fenixAccs.stream().filter(acc -> !AccStatus.DESESTIMADA.getDescription().equals(acc.getEstado())).collect(Collectors.toList());
+
             for (FenixAcc accInc : fenixAccs){
                 iAcc = accsIncurridos.indexOf(accInc);
                 if (iAcc >= 0){
@@ -186,7 +187,7 @@ public class FenixRepository {
                 }
             }
 
-            */
+
 
         }catch(IOException ex){
             throw new AppException(ex);

@@ -3,8 +3,8 @@
     <actions>
 
         <action name="download">
-            <url>${everis.conf.fenix.urlbase}/fenix/actuaciones/exportarActuacionesPetOtAction.do?PETICION_OID=${everis.fenix.idpeticionot}</url>
-            <httpMethod>GET</httpMethod>
+            <url>${everis.conf.fenix.urlbase}/fenix/actuaciones/exportarActuacionesPetOtAction.do</url>
+            <httpMethod>POST</httpMethod>
             <headers>
                 <header name="Accept" value="text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"/>
                 <header name="Accept-Encoding" value="gzip, deflate, sdch"/>
@@ -15,6 +15,16 @@
                 <header name="Upgrade-Insecure-Requests" value="1"/>
                 <header name="User-Agent" value="Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36"/>
             </headers>
+            <parameters>
+                <parameter>
+                    <name>idAcc</name>
+                    <value>1841126,1841125,1841124,1841123,1841127,1841417,1851114,1851110,1851109,1851111,1851112,1851113,1852491,1852492,1852493,1852760,1852762,1852761,1852788,1852787,1852786,1852784,1852783,1852785,1854481,1856476,1856477,1858223,1858224</value>
+                </parameter>
+                <parameter>
+                    <name>idPeticionExp</name>
+                    <value>${everis.fenix.idpeticionot}</value>
+                </parameter>
+            </parameters>
             <validators>
                 <validator className="net.dms.fsync.httphandlers.control.validators.ContentTypeValidator">
                     <parameters>
