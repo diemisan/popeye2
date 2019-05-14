@@ -9,6 +9,7 @@ public enum EverisVariables {
     FENIX_USER(EverisPropertiesType.FENIX_USER.getProperty()),
     FENIX_PASSWORD(EverisPropertiesType.FENIX_PASSWORD.getProperty()),
     FENIX_URL_BASE(EverisPropertiesType.FENIX_URL_BASE.getProperty()),
+    FENIX_IDS_ACCS("everis.fenix.idsaccs"),
     UPLOAD_FILE("everis.fenix.upload.file"),
     JIRA_JQL("everis.jira.jql"),
     JIRA_USER(EverisPropertiesType.JIRA_USER.getProperty()),

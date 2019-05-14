@@ -66,13 +66,15 @@ public class FenixRepository {
         fs.execute();
     }
 
-    public void downloadACCsIncurridos(Long idPeticionOt, String pathFile) {
-
+    public void downloadACCsIncurridos(Long idPeticionOt, Set<Long> idsACCs, String pathFile) {
         //TODO FIXME, avoid login
         Map<String, String> variables = createFenixVariables(idPeticionOt.toString());
         ActionExecutor ae = new ActionExecutor("/bmw/rsp/executions/fenix_login.xml", variables);
         ae.execute();
 
+        List<String> idsACCsString = new ArrayList<>();
+        idsACCs.stream().forEach(id -> idsACCsString.add(id.toString()));
+        variables.put(EverisVariables.FENIX_IDS_ACCS.getVariableName(), String.join(",", idsACCsString));
         // TODO FIXME, DISABLED FOr agile
         DownloadAction fs = new DownloadAction("/bmw/rsp/executions/fenix_download_accs_incurridos.xml", pathFile, variables);
        fs.execute();
@@ -109,7 +111,7 @@ public class FenixRepository {
 
     }
 
-    public List<FenixAcc> searchACCsIncurridos(Long idOt, boolean forceDownload){
+    public List<FenixAcc> searchACCsIncurridos(Long idOt, Set<Long> idsACCs, boolean forceDownload){
         List<FenixAcc> fenixAccs = new ArrayList<FenixAcc>();
         File accFile = getACCsIncurridosFile(idOt);
         if (forceDownload) {
@@ -118,7 +120,7 @@ public class FenixRepository {
         InputStream fis;
         try {
             if (!accFile.exists()) {
-                downloadACCsIncurridos(idOt, accFile.getAbsolutePath());
+                downloadACCsIncurridos(idOt, idsACCs, accFile.getAbsolutePath());
             }
             fis = new FileInputStream(accFile);
 
@@ -173,8 +175,8 @@ public class FenixRepository {
 
 
 
-
-            List<FenixAcc> accsIncurridos = searchACCsIncurridos(idOt, forceDownload);
+            Set<Long> idsACCs = fenixAccs.stream().map(FenixAcc::getIdAcc).collect(Collectors.toSet());
+            List<FenixAcc> accsIncurridos = searchACCsIncurridos(idOt, idsACCs, forceDownload);
             int iAcc;
 
             fenixAccs = fenixAccs.stream().filter(acc -> !AccStatus.DESESTIMADA.getDescription().equals(acc.getEstado())).collect(Collectors.toList());
