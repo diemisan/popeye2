@@ -2,33 +2,39 @@
   "actores": [
     {
       "numeroEmpleadoEveris": "111911",
-      "usuarioJira": "diego.minano.sanchez",
-      "email": "dminanos@everis.com",
-      "nombre": "Diego Miñano Sánchez"
+      "usuarioJira": "qxo1497",
+      "email": "DiegoMinano.Sanchez.bp@nttdata.com",
+      "nombre": "Diego Miñano"
     },
     {
       "numeroEmpleadoEveris": "145429",
-      "usuarioJira": "rafael.sevilla.cuenca",
-      "email": "",
-      "nombre": "Rafael Sevilla Cuenca"
+      "usuarioJira": "QXR4637",
+      "email": "Rafael.SevillaCuenca.bp@nttdata.com",
+      "nombre": "Rafael Sevilla"
     },
     {
       "numeroEmpleadoEveris": "137742",
-      "usuarioJira": "jrey105",
-      "email": "",
+      "usuarioJira": "QXT0672",
+      "email": "GustavoJavier.ReyLlama.bp@nttdata.com",
       "nombre": "Javi Rey"
     },
     {
-      "numeroEmpleadoEveris": "137920",
-      "usuarioJira": "csanemet",
-      "email": "",
-      "nombre": "Carlos San Emeterio"
+      "numeroEmpleadoEveris": "175040",
+      "usuarioJira": "qxz08kr",
+      "email": "JuanPedro.BarbaSoler.bp@nttdata.com",
+      "nombre": "Juanpe Barba"
     },
     {
       "numeroEmpleadoEveris": "120601",
-      "usuarioJira": "ana---",
-      "email": "",
-      "nombre": "Ana María"
+      "usuarioJira": "qxt9171",
+      "email": "AnaMaria.GallegosGarcia.bp@nttdata.com",
+      "nombre": "Ana María Gallegos"
+    },
+    {
+      "numeroEmpleadoEveris": "159808",
+      "usuarioJira": "QXZ0ALD",
+      "email": "MiguelMatias.Garcia.bp@nttdata.com",
+      "nombre": "Miguel Matias"
     }
   ]
 }
