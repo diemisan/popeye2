@@ -41,6 +41,7 @@ public class FenixAccMapper {
         acc.setFechaEntrega(row.getCell(AccRowType.FECHA_ENTREGA.getColPosition()) != null ? row.getCell(AccRowType.FECHA_ENTREGA.getColPosition()).getDateCellValue() : null);
         //       acc.setFechaCierre(row.getCell(AccRowType.FECHACIERRE.getColPosition()).getStringCellValue());
         //       acc.setFechaDesestimacion(row.getCell(AccRowType.FECHA_DESESTIMACION.getColPosition()).getStringCellValue());
+      acc.setFechaDesestimacion(row.getCell(AccRowType.FECHA_DESESTIMACION.getColPosition()) != null ? row.getCell(AccRowType.FECHA_DESESTIMACION.getColPosition()).getDateCellValue() : null);
         //       acc.setFechaInicioCentro(row.getCell(AccRowType.FECHA_INICIO_CENTRO.getColPosition()).getStringCellValue());
         //       acc.setFesultadoTesting(row.getCell(AccRowType.RESULTADO_TESTING.getColPosition()).getStringCellValue());
        acc.setPuntosHistoria(row.getCell(AccRowType.PUNTOS_HISTORIA.getColPosition()) != null ? row.getCell(AccRowType.PUNTOS_HISTORIA.getColPosition()).getStringCellValue() : null);
@@ -108,6 +109,14 @@ public class FenixAccMapper {
             cell.setCellStyle(style);
         }
 
+        if (acc.getFechaDesestimacion() != null || AccStatus.DESESTIMADA.getDescription().equals(acc.getEstado())) {
+          if (acc.getFechaDesestimacion() == null) {
+            acc.setFechaDesestimacion(new Date());
+          }
+          cell = row.createCell(AccRowType.FECHA_DESESTIMACION.getColPosition());
+          cell.setCellValue(acc.getFechaDesestimacion());
+          cell.setCellStyle(style);
+        }
 
         row.createCell(AccRowType.RESPONSABLE.getColPosition()).setCellValue(acc.getResponsable());
         row.createCell(AccRowType.ID_PETICIONOT_ASOCIADA.getColPosition()).setCellValue(acc.getIdPeticionOtAsociada());

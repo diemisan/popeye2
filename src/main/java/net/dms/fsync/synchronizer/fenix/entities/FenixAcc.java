@@ -38,7 +38,7 @@ public class FenixAcc implements Serializable {
 
     private Date fechaEntrega;
     private String fechaCierre;
-    private String fechaDesestimacion;
+    private Date fechaDesestimacion;
     private String fechaInicioCentro;
     private String fesultadoTesting;
     private String puntosHistoria;
@@ -248,11 +248,11 @@ public class FenixAcc implements Serializable {
         this.fechaCierre = fechaCierre;
     }
 
-    public String getFechaDesestimacion() {
+    public Date getFechaDesestimacion() {
         return fechaDesestimacion;
     }
 
-    public void setFechaDesestimacion(String fechaDesestimacion) {
+    public void setFechaDesestimacion(Date fechaDesestimacion) {
         this.fechaDesestimacion = fechaDesestimacion;
     }
 
