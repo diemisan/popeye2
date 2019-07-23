@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
  * Created by dminanos on 19/04/2017.
  */
 public enum AccSubType implements VisualizableType{
+    ANALISIS("ANALISIS", AccType.EVOLUTIVO ),
     CONSULTA("CONSULTA", AccType.EVOLUTIVO ),
     CODIFICACION("CODIFICACION",  AccType.EVOLUTIVO, AccType.CORRECCION_INCIDENCIAS),
     REVISION("REVISION",  AccType.EVOLUTIVO),
