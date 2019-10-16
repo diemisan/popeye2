@@ -29,8 +29,10 @@ import org.springframework.stereotype.Component;
 
 
 import java.io.*;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -233,14 +235,37 @@ public class FenixRepository {
         return path;
     }
 
-    public File getACCsTemplate(){
-       URL url =  Thread.class.getResource("/fenix/templates/PlantillaCargaMasivaActuacionesCortas.xlsx");
-       return new File(url.getFile());
+    public InputStream getACCsTemplate(){
+        try {
+            return getClass().getClassLoader().getResourceAsStream("templates/PlantillaCargaMasivaActuacionesCortas.xlsx");
+        } catch (Exception e) {
+            throw new AppException(e);
+        }
     }
 
     public File getIncidenciasTemplate(){
-        URL url =  Thread.class.getResource("/fenix/templates/PlantillaCargaMasivaIncidencias.xls");
-        return new File(url.getFile());
+        try {
+            System.out.println(" THE FILE: " + Thread.currentThread().getContextClassLoader().getResource("templates/PlantillaCargaMasivaIncidencias.xls").toURI());
+            return Paths.get( Thread.currentThread().getContextClassLoader().getResource("templates/PlantillaCargaMasivaIncidencias.xls").toURI()).toFile();
+        } catch (URISyntaxException e) {
+            System.out.println(" THE FILE ERror 1");
+            try {
+                System.out.println(" THE FILE2: " + Thread.currentThread().getContextClassLoader().getResource("/templates/PlantillaCargaMasivaIncidencias.xls").toURI());
+                return Paths.get( Thread.currentThread().getContextClassLoader().getResource("/templates/PlantillaCargaMasivaIncidencias.xls").toURI()).toFile();
+            } catch (URISyntaxException e2) {
+                System.out.println(" THE FILE ERror 2");
+
+                try {
+                    System.out.println(" THE FILE3: " + getClass().getResource("templates/PlantillaCargaMasivaIncidencias.xls").toURI());
+                    return Paths.get( getClass().getResource("templates/PlantillaCargaMasivaIncidencias.xls").toURI()).toFile();
+                } catch (URISyntaxException e3) {
+                    System.out.println(" THE FILE ERror 3");
+
+                }
+
+            }
+            throw new AppException(e);
+        }
     }
     public File getACCsFile(Long idPeticion){
         File path;
@@ -318,12 +343,11 @@ public class FenixRepository {
 
     public void saveCCs(List<FenixAcc> accs) {
         File accFile = getACCsFile(accs.get(0).getIdPeticionOtAsociada());
-        File template = getACCsTemplate();
         InputStream fis;
         int lastRow = 1;
         try {
 
-            fis = new FileInputStream(template);
+            fis = getACCsTemplate();
 
             Workbook wb = new XSSFWorkbook(fis);
             fis.close();

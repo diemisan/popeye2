@@ -1,7 +1,9 @@
 package net.dms.fsync.settings.entities;
 
 import net.dms.fsync.httphandlers.entities.exceptions.AppException;
+import net.dms.fsync.settings.business.SettingsService;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -10,14 +12,29 @@ import java.util.stream.Collectors;
  * Created by dminanos on 18/04/2017.
  */
 public class EverisConfig {
-    private static EverisConfig ourInstance = new EverisConfig();
+    private static EverisConfig INSTANCE;
     private Properties properties;
     private Properties overriderProperpeties;
     private Map<String, String> mapResponsableJiraEveris = new HashMap<>();
     private Map<String, String> jiraFilters = new HashMap<>();
+    private static String WORKSPACE_PATH = "./";
 
-    public static EverisConfig getInstance() {
-        return ourInstance;
+    public static EverisConfig getInstance(){
+        return getInstance(WORKSPACE_PATH);
+    }
+
+    public static EverisConfig getInstance(String workspacePath){
+        if(INSTANCE == null){
+
+            /*  TODO validate is not executed with 2 differents paths
+            if (workspacePath != null && !workspacePath.equals(WORKSPACE_PATH)) {
+                throw new AppException("The application is already initialized on workspace ");
+            }
+            */
+            WORKSPACE_PATH = workspacePath;
+            INSTANCE = new EverisConfig();
+        }
+        return INSTANCE;
     }
 
     private EverisConfig() {
@@ -26,7 +43,8 @@ public class EverisConfig {
         try {
 
             properties.load(Thread.class.getResourceAsStream("/bmw/rsp/everis.conf"));
-            overriderProperpeties.load(Thread.class.getResourceAsStream("/bmw/rsp/everis_overriden.conf"));
+            //overriderProperpeties.load(Thread.class.getResourceAsStream("/bmw/rsp/everis_overriden.conf"));
+            overriderProperpeties.load(new FileInputStream(WORKSPACE_PATH + "popeye-conf/configuration.properties"));
 
             overriderProperpeties.entrySet().stream().forEach( p ->
                 properties.put(p.getKey(), p.getValue())

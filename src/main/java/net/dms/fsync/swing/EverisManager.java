@@ -1,5 +1,6 @@
 package net.dms.fsync.swing;
 
+import net.dms.fsync.httphandlers.entities.exceptions.AppException;
 import net.dms.fsync.settings.entities.Application;
 import net.dms.fsync.synchronizer.fenix.business.FenixService;
 import net.dms.fsync.synchronizer.fenix.entities.FenixPeticion;
@@ -36,6 +37,8 @@ import javax.swing.event.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 import java.util.List;
 import java.util.function.Consumer;
@@ -85,20 +88,27 @@ public class EverisManager {
   FenixService fenixService;
   TableSettingControl tableSettingControl;
   FenixAccMapper accMapper = new FenixAccMapper();
-  EverisConfig config = EverisConfig.getInstance();
-  Settings settings = SettingsService.getInstance().getSettings();
+  static EverisConfig config;
+  static Settings settings;
 
 
   private Map<String, String> jiraFilters = config.getJiraFilters();
 
 
   public static void main(String[] args) {
+    final String WORKSPACE_PATH = args.length > 0 ? args[0] : "./";
+    settings = SettingsService.getInstance(WORKSPACE_PATH).getSettings();
+    config = EverisConfig.getInstance(WORKSPACE_PATH);
+
+
     JFrame frame = new JFrame("Jira / Fenix");
     frame.setContentPane(new EverisManager().panelParent);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.pack();
     frame.setVisible(true);
 
+    //frame.setIconImage(new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("images/app.png")).getImage());
+    frame.setIconImage(new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("images/app.png")).getImage());
 
   }
 
@@ -114,7 +124,7 @@ public class EverisManager {
     SwingUtil.registerListener(peticionesDisponiblesCmb, this::loadAccs, this::handleException);
     SwingUtil.registerListener(uploadIncidenciasBtn, this::uploadIncidencias, this::handleException);
     SwingUtil.registerListener(refreshIncidenciasBtn, this::refreshIncidencias, this::handleException);
-    SwingUtil.registerListener(generateSpecificationRequirementsBtn, this::generateSpecificationReuirements, this::handleException);
+    //SwingUtil.registerListener(generateSpecificationRequirementsBtn, this::generateSpecificationReuirements, this::handleException);
 
 
     init();
@@ -380,9 +390,14 @@ public class EverisManager {
     jiraService = context.getBean(JiraService.class);
 
     tableSettingControl = context.getBean(TableSettingControl.class);
+    checkWorkspace();
     initTabSyncJiraFenix();
-
-
+  }
+  private void checkWorkspace(){
+      File parent = new File(config.getProperty(EverisPropertiesType.PROJECT_PATH));
+      if (!parent.exists()) {
+        parent.mkdirs();
+      }
   }
 
   private void initTabSyncJiraFenix() {

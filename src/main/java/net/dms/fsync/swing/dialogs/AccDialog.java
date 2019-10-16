@@ -75,7 +75,7 @@ public class AccDialog extends JenixDialog<FenixAcc> {
         txtPuntosHistoria.setText(getPayload().getPuntosHistoria());
         txtHistoriaUsuario.setText(getPayload().getHistoriaUsuario());
         txtEsfuerzoCliente.setText(getPayload().getEsfuerzoCliente());
-        jtbBitacora.getModel().load(getPayload().getBitacora());
+        //jtbBitacora.getModel().load(getPayload().getBitacora());
         List<FenixResponsable> responsablesEsfuerzos = jtbResponsables.getModel().getList();
 
         for (Actor actor : SettingsService.getInstance().getSettings().getActores()){
@@ -120,6 +120,7 @@ public class AccDialog extends JenixDialog<FenixAcc> {
         JLabel lblEsfuerzo = new JLabel("Esfuerzo cliente");
         JLabel lblHistoriaUsuario  = new JLabel("Historia usuario");
         JLabel lblResponsables = new JLabel("Responsables");
+/*
         JLabel lblFechaPrevistaProyecto = new JLabel("Fecha prevista");
 
         JButton addBitacoraBtn = new JButton("Agregar comentario");
@@ -130,7 +131,7 @@ public class AccDialog extends JenixDialog<FenixAcc> {
             }
         });
 
-
+*/
         txtCodigoPeticionCliente = new JTextField();
         cmbEstado = new JComboBox();
         cmbTipo = new JComboBox();
@@ -163,12 +164,13 @@ public class AccDialog extends JenixDialog<FenixAcc> {
         jtbResponsables.getColumnModel().getColumn(FenixResponsablesTableModel.Columns.ESFUERZO.ordinal()).setCellEditor(new NumberCellEditor());
         jtbResponsables.getColumnModel().getColumn(FenixResponsablesTableModel.Columns.SUBTIPO_TAREA.ordinal()).setCellEditor(new DefaultCellEditor(accSubTypeEditor));
 
+        /*
         BitacoraTableModel bitacoraTableModel = new BitacoraTableModel(new ArrayList<>());
         jtbBitacora = new JenixTable(bitacoraTableModel);
         bitacoraScrollPane = new JScrollPane(jtbBitacora, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         bitacoraScrollPane.setMinimumSize(new Dimension(200,120));
         jtbBitacora.setFillsViewportHeight(true);
-
+*/
        // datFechaPrevistaProyecto = new JDatePickerImpl();
 
         txtNombre = new JTextField(15);
@@ -209,7 +211,7 @@ public class AccDialog extends JenixDialog<FenixAcc> {
         constraints.gridx = 0;
         constraints.gridy = ++fila;
         panel.add(sp, constraints);
-
+/*
         constraints.gridx = 0;
         constraints.gridy = ++fila;
         constraints.weightx = anchoEntiquetas;
@@ -223,7 +225,7 @@ public class AccDialog extends JenixDialog<FenixAcc> {
         constraints.gridx = 0;
         constraints.gridy = ++fila;
         panel.add(addBitacoraBtn, constraints);
-
+*/
         // fields codigo petición - historia usuario
         constraints.gridx = 0;
         constraints.gridy = ++fila;
@@ -339,7 +341,7 @@ public class AccDialog extends JenixDialog<FenixAcc> {
         getPayload().setHistoriaUsuario(txtHistoriaUsuario.getText());
         getPayload().setEsfuerzoCliente(txtEsfuerzoCliente.getText());
 
-        getPayload().setBitacora(jtbBitacora.getList());
+       // getPayload().setBitacora(jtbBitacora.getList());
 
         StringBuilder responsables = new StringBuilder();
         StringBuilder esfuerzos = new StringBuilder();
