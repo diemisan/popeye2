@@ -53,10 +53,10 @@ public class FenixAccMapper {
     public FenixAcc mapIncurridos(Row row){
         FenixAcc acc = new FenixAcc();
         acc.setIdAcc(row.getCell(AccIncurridoRowType.ID_ACC.getColPosition()) != null ? new Long(new Double(row.getCell(AccIncurridoRowType.ID_ACC.getColPosition()).getStringCellValue()).longValue()) : null);
-        acc.setIncurrido(row.getCell(AccIncurridoRowType.INCURRIDO.getColPosition()) != null ? new Double(row.getCell(AccIncurridoRowType.INCURRIDO.getColPosition()).getStringCellValue()) : null);
+        acc.setIncurrido(row.getCell(AccIncurridoRowType.INCURRIDO.getColPosition()) != null ? new Double(row.getCell(AccIncurridoRowType.INCURRIDO.getColPosition()).getNumericCellValue()) : null);
 
-        acc.setEtc(row.getCell(AccIncurridoRowType.ETC.getColPosition()) != null && !StringUtils.isBlank(row.getCell(AccIncurridoRowType.ETC.getColPosition()).getStringCellValue())
-                ? new Double(row.getCell(AccIncurridoRowType.ETC.getColPosition()).getStringCellValue()) : null);
+        acc.setEtc(row.getCell(AccIncurridoRowType.ETC.getColPosition()) != null
+                ? new Double(row.getCell(AccIncurridoRowType.ETC.getColPosition()).getNumericCellValue()) : null);
 
         return acc;
     }
