@@ -3,7 +3,7 @@
     <!--proxy scheme="http" host="10.114.8.100" port="8080"/-->
     <actions>
         <action name="login">
-            <url>${everis.conf.jira.urlbase}/jira/login.jsp</url>
+            <url>${everis.conf.jira.urlbase}${everis.conf.jira.path.login}</url>
             <httpMethod>POST</httpMethod>
             <headers>
 

@@ -59,6 +59,7 @@ public class JiraRepository {
     private Map<String, String> createJiraVariables(){
         Map<String, String> variables = new HashMap<String, String>();
         variables.put(EverisVariables.JIRA_URL_BASE.getVariableName(), EverisConfig.getInstance().getProperty(EverisPropertiesType.JIRA_URL_BASE));
+        variables.put(EverisVariables.JIRA_PATH_LOGIN.getVariableName(), EverisConfig.getInstance().getProperty(EverisPropertiesType.JIRA_PATH_LOGIN));
         variables.put(EverisVariables.JIRA_USER.getVariableName(), EverisConfig.getInstance().getProperty(EverisPropertiesType.JIRA_USER));
         variables.put(EverisVariables.JIRA_PASSWORD.getVariableName(), EverisConfig.getInstance().getProperty(EverisPropertiesType.JIRA_PASSWORD));
         return variables;

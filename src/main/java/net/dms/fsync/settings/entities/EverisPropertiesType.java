@@ -19,6 +19,7 @@ public enum EverisPropertiesType {
     JIRA_USER("everis.conf.jira.user"),
     JIRA_PASSWORD("everis.conf.jira.password"),
     JIRA_URL_BASE("everis.conf.jira.urlbase"),
+    JIRA_PATH_LOGIN("everis.conf.jira.path.login"),
     INCIDENCIAS_FILE_NAME("everis.conf.incidencias.file.name");
 
     private String property;
