@@ -2,29 +2,13 @@
 <execution name="jira_issues_search">
     <!--proxy scheme="http" host="10.114.8.100" port="8080"/-->
     <actions>
-        <action name="login">
-            <url>${everis.conf.jira.urlbase}${everis.conf.jira.path.login}</url>
-            <httpMethod>POST</httpMethod>
-            <headers>
 
-            </headers>
-            <parameters>
-                <parameter>
-                    <name>os_username</name>
-                    <value>${everis.conf.jira.user}</value>
-                </parameter>
-                <parameter>
-                    <name>os_password</name>
-                    <value>${everis.conf.jira.password}</value>
-                </parameter>
-            </parameters>
-        </action>
         <action name="retrieve-issues">
             <url>${everis.conf.jira.urlbase}/jira/rest/api/2/search?jql=${everis.jira.jql}</url>
             <httpMethod>GET</httpMethod>
             <headers>
                 <header name="Content-Type" value="application/json"/>
-                <header name="Cookie" value="${response.header.Set-Cookie}"/>
+                <header name="Authorization" value="${variable.jira.authorization}"/>
             </headers>
         </action>
 

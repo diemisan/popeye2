@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.InputStream;
 import java.net.URLEncoder;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -57,11 +58,11 @@ public class JiraRepository {
     }
 
     private Map<String, String> createJiraVariables(){
+        String authorization = String.format("%s:%s", EverisConfig.getInstance().getProperty(EverisPropertiesType.JIRA_USER), EverisConfig.getInstance().getProperty(EverisPropertiesType.JIRA_PASSWORD));
+        authorization = String.format("Basic %s", new String(Base64.getEncoder().encode(authorization.getBytes())));
         Map<String, String> variables = new HashMap<String, String>();
         variables.put(EverisVariables.JIRA_URL_BASE.getVariableName(), EverisConfig.getInstance().getProperty(EverisPropertiesType.JIRA_URL_BASE));
-        variables.put(EverisVariables.JIRA_PATH_LOGIN.getVariableName(), EverisConfig.getInstance().getProperty(EverisPropertiesType.JIRA_PATH_LOGIN));
-        variables.put(EverisVariables.JIRA_USER.getVariableName(), EverisConfig.getInstance().getProperty(EverisPropertiesType.JIRA_USER));
-        variables.put(EverisVariables.JIRA_PASSWORD.getVariableName(), EverisConfig.getInstance().getProperty(EverisPropertiesType.JIRA_PASSWORD));
+        variables.put(EverisVariables.JIRA_AUTHORIZATION.getVariableName(), authorization);
         return variables;
     }
 }

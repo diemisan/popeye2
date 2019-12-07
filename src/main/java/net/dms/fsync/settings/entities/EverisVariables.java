@@ -15,7 +15,7 @@ public enum EverisVariables {
     JIRA_USER(EverisPropertiesType.JIRA_USER.getProperty()),
     JIRA_PASSWORD(EverisPropertiesType.JIRA_PASSWORD.getProperty()),
     JIRA_URL_BASE(EverisPropertiesType.JIRA_URL_BASE.getProperty()),
-    JIRA_PATH_LOGIN(EverisPropertiesType.JIRA_PATH_LOGIN.getProperty());
+    JIRA_AUTHORIZATION("variable.jira.authorization");
 
 	private String variableName;
 
