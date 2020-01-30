@@ -1,11 +1,13 @@
 package net.dms.fsync.synchronizer.fenix.control;
 
+import net.dms.fsync.httphandlers.entities.exceptions.AppException;
 import net.dms.fsync.settings.entities.EverisConfig;
 import net.dms.fsync.synchronizer.fenix.entities.FenixAcc;
 import net.dms.fsync.synchronizer.fenix.entities.JiraIssue;
 import net.dms.fsync.synchronizer.fenix.entities.enumerations.*;
 import org.apache.poi.ss.usermodel.*;
 
+import java.lang.reflect.Constructor;
 import java.util.Date;
 import org.apache.commons.lang3.StringUtils;
 
@@ -55,8 +57,7 @@ public class FenixAccMapper {
         acc.setIdAcc(row.getCell(AccIncurridoRowType.ID_ACC.getColPosition()) != null ? new Long(new Double(row.getCell(AccIncurridoRowType.ID_ACC.getColPosition()).getStringCellValue()).longValue()) : null);
         acc.setIncurrido(row.getCell(AccIncurridoRowType.INCURRIDO.getColPosition()) != null ? new Double(row.getCell(AccIncurridoRowType.INCURRIDO.getColPosition()).getNumericCellValue()) : null);
 
-        acc.setEtc(row.getCell(AccIncurridoRowType.ETC.getColPosition()) != null
-                ? new Double(row.getCell(AccIncurridoRowType.ETC.getColPosition()).getNumericCellValue()) : null);
+        acc.setEtc(map(row.getCell(AccIncurridoRowType.ETC.getColPosition()), Double.class));
 
         return acc;
     }
@@ -149,6 +150,34 @@ public class FenixAccMapper {
         fenixAcc.setFechaSolicitudCliente(fenixAcc.getFechaCreacion());
         fenixAcc.setResponsable(issue.getFields().getAssignee() != null ? config.searchEverisEmployIdByJiraId(issue.getFields().getAssignee().getKey()) : null);
         return fenixAcc;
+    }
+
+
+    private <T> T map(Cell cell, Class<T> clazz) {
+      T value = null;
+      Constructor constructor;
+      try {
+        if (cell != null) {
+          switch (cell.getCellType()) {
+            case Cell.CELL_TYPE_STRING:
+              constructor = clazz.getConstructor(String.class); // TODO fixme, I'm assuming it will be a String
+              if (StringUtils.isEmpty(cell.getStringCellValue())){
+                return null;
+              } else {
+                return (T) constructor.newInstance(cell.getStringCellValue());
+              }
+            case Cell.CELL_TYPE_NUMERIC:
+              constructor = clazz.getConstructor(Double.class); // TODO fixme, I'm assuming it will be a Double
+              return (T) constructor.newInstance(cell.getNumericCellValue());
+            default:
+              throw new IllegalArgumentException(String.format("Cell type <%d> is not supported", cell.getCellType()));
+          }
+        }
+
+      }catch(Exception ex) {
+        throw new AppException(ex);
+      }
+      return value;
     }
 
 }
