@@ -4,7 +4,7 @@
     <actions>
 
         <action name="retrieve-issues">
-            <url>${everis.conf.jira.urlbase}/jira/rest/api/2/search?jql=${everis.jira.jql}</url>
+            <url>${everis.conf.jira.urlbase}/rest/api/2/search?jql=${everis.jira.jql}</url>
             <httpMethod>GET</httpMethod>
             <headers>
                 <header name="Content-Type" value="application/json"/>
