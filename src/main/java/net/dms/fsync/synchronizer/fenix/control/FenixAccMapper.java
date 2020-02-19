@@ -167,8 +167,9 @@ public class FenixAccMapper {
                 return (T) constructor.newInstance(cell.getStringCellValue());
               }
             case Cell.CELL_TYPE_NUMERIC:
-              constructor = clazz.getConstructor(Double.class); // TODO fixme, I'm assuming it will be a Double
-              return (T) constructor.newInstance(cell.getNumericCellValue());
+             // constructor = clazz.getConstructor(Double.class); // TODO fixme, I'm assuming it will be a Double
+              //return (T) constructor.newInstance(cell.getNumericCellValue());
+              return (T)new Double(cell.getNumericCellValue());
             default:
               throw new IllegalArgumentException(String.format("Cell type <%d> is not supported", cell.getCellType()));
           }
