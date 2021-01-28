@@ -125,26 +125,53 @@ public class FenixAccMapper {
     }
 
     public FenixAcc mapJiraIssue2Acc(JiraIssue issue) {
-      //  SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
-        //language=JSON
-        String test ="{\"test\": \"prueba\", \"that\": \"test\"}";
         FenixAcc fenixAcc = new FenixAcc();
         fenixAcc.setNombre(issue.getKey() + " " + issue.getFields().getSummary());
         fenixAcc.setCodigoPeticionCliente(issue.getKey());
         fenixAcc.setDescripcion(StringUtils.truncate(StringUtils.isBlank(issue.getFields().getDescription()) ? issue.getFields().getSummary() : issue.getFields().getDescription(), 1024));
         fenixAcc.setEstado(AccStatus.EN_EJECUCION.getDescription());
-        // TODO FIXME AGILE
-        fenixAcc.setTipo(AccType.USER_STORY.getDescription());
+
+        AccType accType = null;
+        if (issue.getFields().getIssueType() != null) {
+            accType = AccType.fromJiraType(issue.getFields().getIssueType().getName());
+        }
+        fenixAcc.setTipo(accType != null ? accType.getDescription() : null);
         fenixAcc.setSubTipo(AccSubType.CODIFICACION.getDescription());
         fenixAcc.setRechazosEntrega(0);
         fenixAcc.setCriticidad(AccCriticidad.MEDIA.getDescription());
 
+        if (accType != null) {
+            switch (accType) {
+                case USER_STORY:
+                    fenixAcc.setHistoriaUsuario(issue.getFields().getParent() != null ? issue.getFields().getParent().getKey() : issue.getKey());
+                    break;
+                case BUG:
+                    fenixAcc.setHistoriaUsuario(AccType.BUG.getDescription());
+                    break;
+            }
+        }
 
-        // TODO FIXME AGILE
-
-        fenixAcc.setHistoriaUsuario(issue.getFields().getParent() != null ? issue.getFields().getParent().getKey() : issue.getKey());
-
-        fenixAcc.setEsfuerzo("1");
+        fenixAcc.setPuntosHistoria(issue.getFields().getOdmStoryPoints() != null ? Integer.toString(issue.getFields().getOdmStoryPoints()) : null);
+        // TODO FIXME
+        if ( fenixAcc.getPuntosHistoria() != null) {
+            switch (Integer.valueOf(fenixAcc.getPuntosHistoria())){
+                case 1:
+                    fenixAcc.setEsfuerzo("7");
+                    break;
+                case 3:
+                    fenixAcc.setEsfuerzo("22");
+                    break;
+                case 5:
+                    fenixAcc.setEsfuerzo("36");
+                    break;
+                case 8:
+                    fenixAcc.setEsfuerzo("58");
+                    break;
+                case 13:
+                    fenixAcc.setEsfuerzo("70");
+                    break;
+            }
+        }
         fenixAcc.setEsfuerzoCliente(fenixAcc.getEsfuerzo());
         fenixAcc.setFechaCreacion(new Date());
         fenixAcc.setFechaSolicitudCliente(fenixAcc.getFechaCreacion());

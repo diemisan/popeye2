@@ -19,6 +19,17 @@ public enum AccType implements VisualizableType{
         this.description = description;
     }
 
+    public static AccType fromJiraType(String jiraTypeName){
+        switch (jiraTypeName) {
+            case "Story":
+                return USER_STORY;
+            case "Bug":
+                return BUG;
+            default:
+               return null;
+        }
+    }
+
     public String getDescription() {
         return description;
     }
