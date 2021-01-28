@@ -114,6 +114,7 @@ public class FenixRepository {
     }
 
     public List<FenixAcc> searchACCsIncurridos(Long idOt, Set<Long> idsACCs, boolean forceDownload){
+        /*
         List<FenixAcc> fenixAccs = new ArrayList<FenixAcc>();
         File accFile = getACCsIncurridosFile(idOt);
         if (forceDownload) {
@@ -146,6 +147,9 @@ public class FenixRepository {
         }
 
         return fenixAccs;
+
+         */
+        return new ArrayList<>();
     }
 
     public List<FenixAcc> searchACCs(Long idOt, boolean forceDownload){
